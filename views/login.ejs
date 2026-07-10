@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoomSync — Log in</title>
+  <meta name="description" content="Log in to RoomSync to find your hostel roommates before room allocation." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+
+  <!-- Signature element: ambient particle field. Nodes drift and draw a
+       connecting line when two of them pass near each other — a quiet nod
+       to what RoomSync actually does: sync two separate people together. -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <main class="auth-shell">
+    <section class="auth-card" aria-labelledby="brand-title">
+
+      <div class="brand">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="28" height="28">
+            <circle cx="12" cy="16" r="7" fill="none" stroke="currentColor" stroke-width="2" class="mark-cyan" />
+            <circle cx="20" cy="16" r="7" fill="none" stroke="currentColor" stroke-width="2" class="mark-purple" />
+          </svg>
+        </span>
+        <span class="brand-name">Room<span class="accent">Sync</span></span>
+      </div>
+
+      <h1 id="brand-title" class="visually-hidden">Log in to RoomSync</h1>
+      <p class="subtitle">Login with your SRM AP credentials.
+We'll securely fetch your hostel details and help you connect with your future roommates.</p>
+
+    <form
+    class="login-form"
+    id="loginForm"
+    action="/login"
+    method="POST"
+    novalidate
+>
+
+        <% if (typeof error !== 'undefined' && error) { %>
+          <p class="form-alert" role="alert"><%= error %></p>
+        <% } %>
+
+        <div class="field">
+          <label for="regNo">Registration number</label>
+          <input
+            type="text"
+            id="regNo"
+            name="regNo"
+            class="mono-input"
+            placeholder="AP21110010XXX"
+            autocomplete="username"
+            autocapitalize="characters"
+            spellcheck="false"
+            required
+          />
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="password-wrap">
+            <input
+              type="password"
+              id="password"
+              name="password"
+              placeholder="••••••••"
+              autocomplete="current-password"
+              required
+            />
+            <button type="button" class="toggle-visibility" id="togglePassword" aria-label="Show password" aria-pressed="false">
+              <svg class="icon-eye" viewBox="0 0 24 24" width="18" height="18">
+                <path fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
+                  d="M1.5 12S5 5 12 5s10.5 7 10.5 7-3.5 7-10.5 7S1.5 12 1.5 12Z" />
+                <circle cx="12" cy="12" r="3" fill="none" stroke="currentColor" stroke-width="1.6" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+       
+
+        <button type="submit" class="login-btn" id="loginBtn">
+          <span class="btn-label">Log in</span>
+          <span class="btn-loader" aria-hidden="true"></span>
+        </button>
+
+      </form>
+
+      <p class="footer-note">Trouble logging in? Reach out to your hostel warden's office.</p>
+    </section>
+  </main>
+
+  <script src="/script.js"></script>
+</body>
+</html>
