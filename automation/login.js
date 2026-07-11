@@ -45,7 +45,7 @@ await page.waitForSelector("text=Hostel");
 
 console.log("Login Successful");
 
-await page.waitForTimeout(3000);
+await page.waitForTimeout(1000);
 
 await page.getByText("Hostel", {
     exact: true

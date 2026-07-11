@@ -46,7 +46,20 @@ async function saveHostelDetails(regNo, hostel) {
 
     console.log("✅ Saved Successfully");
 }
-
 module.exports = {
     saveHostelDetails
+};
+async function getUser(regNo) {
+
+    const [rows] = await db.execute(
+        "SELECT * FROM users WHERE reg_no = ?",
+        [regNo]
+    );
+
+    return rows[0];
+}
+
+module.exports = {
+    saveHostelDetails,
+    getUser
 };

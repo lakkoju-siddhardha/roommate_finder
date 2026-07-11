@@ -1,9 +1,9 @@
 const express = require("express");
 const path = require("path");
 
-const app = express();
+const authRoutes = require("./routes/authRoutes");
 
-const loginToSRM = require("./automation/login");
+const app = express();
 
 app.set("view engine", "ejs");
 
@@ -12,20 +12,14 @@ app.use(express.json());
 
 app.use(express.static(path.join(__dirname, "public")));
 
+app.use("/", authRoutes);
+
 app.get("/", (req, res) => {
     res.render("login");
 });
 
-app.post("/login", async (req, res) => {
-
-    const { regNo, password } = req.body;
-
-    console.log("Registration Number:", regNo);
-    console.log("Password:", password);
-
-    await loginToSRM(regNo, password);
-
-    res.send("Browser Opened");
+app.get("/dashboard", (req, res) => {
+    res.render("dashboard");
 });
 
 app.listen(3000, () => {
