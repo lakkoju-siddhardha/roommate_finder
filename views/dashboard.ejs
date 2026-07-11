@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoomSync · Dashboard</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="/dashboard.css" />
+</head>
+<body>
+
+  <div class="app-shell">
+
+    <!-- ===================== SIDEBAR ===================== -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-logo">
+        <span class="logo-mark">
+          <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+            <circle cx="14" cy="14" r="12" stroke="url(#logoGrad)" stroke-width="2"/>
+            <circle cx="14" cy="14" r="4" fill="url(#logoGrad)"/>
+            <defs>
+              <linearGradient id="logoGrad" x1="0" y1="0" x2="28" y2="28">
+                <stop offset="0" stop-color="#00F5FF"/>
+                <stop offset="1" stop-color="#7C3AED"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </span>
+        <span class="logo-text">Room<em>Sync</em></span>
+      </div>
+
+      <nav class="sidebar-nav">
+        <a href="/dashboard" class="nav-item active" data-tooltip="Dashboard">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="12" width="8" height="9" rx="2"/><rect x="3" y="14" width="8" height="7" rx="2"/></svg>
+          <span>Dashboard</span>
+        </a>
+        <a href="/profile" class="nav-item" data-tooltip="My Profile">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>
+          <span>My Profile</span>
+        </a>
+        <a href="/find-roommates" class="nav-item" data-tooltip="Find Roommates">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="9" r="3.5"/><path d="M3.5 20c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5"/><circle cx="18" cy="8" r="2.5"/><path d="M15.5 13.2c2.2.2 3.9 1.8 4.5 4.3"/></svg>
+          <span>Find Roommates</span>
+        </a>
+        <a href="/friend-requests" class="nav-item" data-tooltip="Friend Requests">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="9" r="3.5"/><path d="M2.5 20c.8-3.2 3-5 6.5-5s5.7 1.8 6.5 5"/><path d="M17 8h5M19.5 5.5v5"/></svg>
+          <span>Friend Requests</span>
+          <span class="nav-badge">3</span>
+        </a>
+        <a href="/messages" class="nav-item" data-tooltip="Messages">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5.5A2.5 2.5 0 0 1 5.5 3h13A2.5 2.5 0 0 1 21 5.5v9A2.5 2.5 0 0 1 18.5 17H10l-5 4v-4H5.5A2.5 2.5 0 0 1 3 14.5v-9Z"/></svg>
+          <span>Messages</span>
+          <span class="nav-badge">5</span>
+        </a>
+        <a href="/notifications" class="nav-item" data-tooltip="Notifications">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9a6 6 0 1 1 12 0c0 4 1.5 5.5 1.5 5.5H4.5S6 13 6 9Z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+          <span>Notifications</span>
+        </a>
+        <a href="/settings" class="nav-item" data-tooltip="Settings">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 13.5a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V19.7a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.11-1.56 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.56-1.04H4.3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 5.95 8.5a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H10.4A1.7 1.7 0 0 0 11.44 2.6V2.5a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1.04 1.56 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V8.6c.14.62.56 1.14 1.14 1.44l.42.14a2 2 0 1 1 0 4Z" opacity="0"/></svg>
+          <span>Settings</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a href="/logout" class="nav-item logout" data-tooltip="Logout">
+          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 3h3.5A2.5 2.5 0 0 1 21 5.5v13a2.5 2.5 0 0 1-2.5 2.5H15"/><path d="M10 17l5-5-5-5M15 12H3"/></svg>
+          <span>Logout</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- ===================== MAIN ===================== -->
+    <div class="main-wrap">
+
+      <!-- ===================== TOP NAVBAR ===================== -->
+      <header class="navbar">
+        <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle sidebar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+
+        <div class="navbar-brand">
+          <svg width="24" height="24" viewBox="0 0 28 28" fill="none">
+            <circle cx="14" cy="14" r="12" stroke="url(#logoGrad2)" stroke-width="2"/>
+            <circle cx="14" cy="14" r="4" fill="url(#logoGrad2)"/>
+            <defs>
+              <linearGradient id="logoGrad2" x1="0" y1="0" x2="28" y2="28">
+                <stop offset="0" stop-color="#00F5FF"/>
+                <stop offset="1" stop-color="#7C3AED"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <span>RoomSync</span>
+        </div>
+
+        <div class="navbar-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
+          <input type="text" id="searchInput" placeholder="Search roommates, rooms, messages…" autocomplete="off" />
+          
+        </div>
+
+        <div class="navbar-actions">
+          <button class="icon-btn" id="notifBtn" aria-label="Notifications">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9a6 6 0 1 1 12 0c0 4 1.5 5.5 1.5 5.5H4.5S6 13 6 9Z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
+            <span class="ping"></span>
+          </button>
+
+          <div class="user-profile" id="userProfile">
+            <div class="avatar">A</div>
+            <div class="user-meta">
+            <span class="user-name"><%= user.reg_no %></span>
+            <span class="user-role">Hosteller</span>
+            </div>
+            <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+          </div>
+        </div>
+      </header>
+
+      <!-- ===================== CONTENT ===================== -->
+      <main class="content">
+
+        <div class="content-head">
+          <div>
+            <h1>Welcome back, <span class="grad-text"><%= user.reg_no %></span></h1>
+            <p class="subtext">Here's what's happening with your room search today.</p>
+          </div>
+          <button class="btn-primary">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+            Find a Roommate
+          </button>
+        </div>
+
+        <!-- ===================== STAT CARDS ===================== -->
+        <section class="stat-grid">
+
+         <article class="stat-card glass" style="--accent:#00F5FF">
+    <div class="stat-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+            <path d="M3 10.5 12 4l9 6.5"/>
+            <path d="M5 9.5V19a1 1 0 0 0 1 1h4v-5h4v5h4a1 1 0 0 0 1-1V9.5"/>
+        </svg>
+    </div>
+
+    <div class="stat-body">
+
+        <span class="stat-label">
+            Hostel Details
+        </span>
+
+        <span class="stat-value">
+            <%= user.room_type %>
+        </span>
+
+        <div class="hostel-info">
+
+            <div class="info-row">
+                <span>Block</span>
+                <strong><%= user.block_name %></strong>
+            </div>
+
+            <div class="info-row">
+                <span>Tower</span>
+                <strong><%= user.tower %></strong>
+            </div>
+
+            <div class="info-row">
+                <span>Room</span>
+                <strong><%= user.room_number %></strong>
+            </div>
+
+        </div>
+
+    </div>
+</article>
+
+          <article class="stat-card glass" style="--accent:#7C3AED">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9.5h16M9 4v16"/></svg>
+            </div>
+            <div class="stat-body">
+              <span class="stat-label"><%= user.academic_year %></span>
+              <span class="stat-value">Allotted Date</span>
+              <span class="stat-sub"><%= user.allotted_date %></span>
+            </div>
+          </article>
+
+          <article class="stat-card glass" style="--accent:#34D399">
+            <div class="stat-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.3 2.3L16 10"/></svg>
+            </div>
+            <div class="stat-body">
+              <span class="stat-label">Hostel  Status</span>
+              <span class="stat-value"><% if(user.room_number){ %>
+
+Hosteller
+
+<% } else { %>
+
+Not Yet Allotted
+
+<% } %></span>
+              
+            </div>
+          </article>
+
+          
+
+          
+
+        </section>
+
+        <!-- ===================== CHARTS ===================== -->
+        <section class="chart-grid">
+
+          
+
+          
+
+        </section>
+
+        <!-- ===================== RECENT ACTIVITY ===================== -->
+       
+
+      </main>
+    </div>
+  </div>
+
+  <script src="/dashboard.js"></script>
+</body>
+</html>

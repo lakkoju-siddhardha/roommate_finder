@@ -1,7 +1,8 @@
 const launchBrowser = require("./browser");
 const solveCaptcha = require("./ocr");
+const getProfileDetails = require("./profile");
 const getHostelDetails = require("./hostel");
-const { saveHostelDetails } = require("../models/userModel");
+const { saveUser } = require("../models/userModel");
 async function loginToSRM(regNo, password) {
 
     const { browser, page } = await launchBrowser();
@@ -45,8 +46,10 @@ await page.waitForSelector("text=Hostel");
 
 console.log("Login Successful");
 
-await page.waitForTimeout(1000);
+await page.waitForTimeout(4000);
+const profile = await getProfileDetails(page);
 
+console.log(profile);
 await page.getByText("Hostel", {
     exact: true
 }).click();
@@ -66,7 +69,7 @@ try {
 }
 const hostel = await getHostelDetails(page);
 
-    await saveHostelDetails(regNo, hostel);
+await saveUser(profile, hostel);
 
 console.log("Saved to Database");
 }

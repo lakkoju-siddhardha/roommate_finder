@@ -19,7 +19,28 @@ app.get("/", (req, res) => {
 });
 
 app.get("/dashboard", (req, res) => {
-    res.render("dashboard");
+
+    const user = {
+        reg_no: "AP25110010998",
+        name: "Lakkoju Siddhardha",
+
+        room_type: "4 Bunker Sharing A/C",
+
+        block_name: "GANGA B",
+
+        tower: "Level 5",
+
+        room_number: "553",
+
+        academic_year: "2025-2026",
+
+        allotted_date: "25-Aug-2025",
+
+        hostel_status: "Hosteller"
+    };
+
+    res.render("dashboard", { user });
+
 });
 
 app.listen(3000, () => {

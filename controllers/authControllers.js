@@ -1,14 +1,19 @@
 const loginToSRM = require("../automation/login");
+const { getUser } = require("../models/userModel");
 
 async function login(req, res) {
-
     try {
 
         const { regNo, password } = req.body;
 
+        // Login to SRM, scrape data, save to MySQL
         await loginToSRM(regNo, password);
 
-        res.redirect("/dashboard");
+        // Fetch the saved user from MySQL
+        const user = await getUser(regNo);
+
+        // Render dashboard with real data
+        res.render("dashboard", { user });
 
     } catch (err) {
 
@@ -17,7 +22,6 @@ async function login(req, res) {
         res.status(500).send("Login Failed");
 
     }
-
 }
 
 module.exports = {
