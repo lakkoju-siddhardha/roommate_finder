@@ -1,19 +1,26 @@
-
 const {
     getMessages,
     saveMessage
 } = require("../models/chatModel");
+
+const {
+    getUserName
+} = require("../models/userModel");
+
 async function openChat(req, res) {
 
     const sender = req.session.regNo;
 
     const receiver = req.params.regNo;
 
+    const receiverName = await getUserName(receiver);
+
     const messages = await getMessages(sender, receiver);
 
     res.render("chat", {
         sender,
         receiver,
+        receiverName,
         messages
     });
 
@@ -35,10 +42,10 @@ async function sendMessage(req, res) {
 
         const io = req.app.get("io");
 
-io.to(receiver).emit("receive-message", {
-    sender,
-    message
-});
+        io.to(receiver).emit("receive-message", {
+            sender,
+            message
+        });
 
         res.json({
             success: true

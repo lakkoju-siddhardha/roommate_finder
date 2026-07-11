@@ -24,29 +24,55 @@ form.addEventListener("submit", async (e) => {
 
     if (!message.trim()) return;
 
-    await fetch("/chat/send", {
+   await fetch("/chat/send", {
 
-        method: "POST",
+    method: "POST",
 
-        headers: {
-            "Content-Type":"application/json"
-        },
+    headers: {
+        "Content-Type": "application/json"
+    },
 
-        body: JSON.stringify({
+    body: JSON.stringify({
 
-            receiver,
-            message
+        receiver,
+        message
 
-        })
-
-    });
-
-    input.value="";
+    })
 
 });
 
-socket.on("receive-message",(data)=>{
+const messageDiv = document.createElement("div");
 
-    location.reload();
+messageDiv.className = "message sent";
+
+messageDiv.innerHTML = `
+    <p>${message}</p>
+`;
+
+chatBox.appendChild(messageDiv);
+
+chatBox.scrollTop = chatBox.scrollHeight;
+
+input.value = "";
+
+input.focus();
+
+});
+
+socket.on("receive-message", (data) => {
+
+    const chatBox = document.getElementById("chatBox");
+
+    const messageDiv = document.createElement("div");
+
+    messageDiv.className = "message received";
+
+    messageDiv.innerHTML = `
+        <p>${data.message}</p>
+    `;
+
+    chatBox.appendChild(messageDiv);
+
+    chatBox.scrollTop = chatBox.scrollHeight;
 
 });

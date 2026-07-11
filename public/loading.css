@@ -1,0 +1,81 @@
+body{
+
+    margin:0;
+
+    font-family:Arial,sans-serif;
+
+    background:#090c15;
+
+    color:white;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    height:100vh;
+
+}
+
+.loader-container{
+
+    text-align:center;
+
+}
+
+.logo{
+
+    font-size:42px;
+
+    font-weight:bold;
+
+    margin-bottom:30px;
+
+}
+
+.logo span{
+
+    color:#18d7ff;
+
+}
+
+.spinner{
+
+    width:70px;
+
+    height:70px;
+
+    border:6px solid rgba(255,255,255,.15);
+
+    border-top:6px solid #18d7ff;
+
+    border-radius:50%;
+
+    animation:spin 1s linear infinite;
+
+    margin:auto;
+
+}
+
+@keyframes spin{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+h2{
+
+    margin-top:30px;
+
+}
+
+p{
+
+    color:#9aa4b3;
+
+}

@@ -41,6 +41,7 @@ We'll securely fetch your hostel details and help you connect with your future r
     id="loginForm"
     action="/login"
     method="POST"
+    autocomplete="off"
     novalidate
 >
 
@@ -56,7 +57,7 @@ We'll securely fetch your hostel details and help you connect with your future r
             name="regNo"
             class="mono-input"
             placeholder="AP21110010XXX"
-            autocomplete="username"
+            autocomplete="off"
             autocapitalize="characters"
             spellcheck="false"
             required
@@ -71,7 +72,7 @@ We'll securely fetch your hostel details and help you connect with your future r
               id="password"
               name="password"
               placeholder="••••••••"
-              autocomplete="current-password"
+              autocomplete="new-password"
               required
             />
             <button type="button" class="toggle-visibility" id="togglePassword" aria-label="Show password" aria-pressed="false">
@@ -97,6 +98,6 @@ We'll securely fetch your hostel details and help you connect with your future r
     </section>
   </main>
 
-  <script src="/script.js"></script>
+  <script src="/script.js" ></script>
 </body>
 </html>

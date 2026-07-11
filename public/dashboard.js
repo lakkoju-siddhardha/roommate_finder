@@ -157,3 +157,18 @@ function initNotifDropdownStub() {
     btn.classList.toggle('active');
   });
 }
+function openRefresh(){
+
+    document
+        .getElementById("refreshModal")
+        .style.display="flex";
+
+}
+
+function closeRefresh(){
+
+    document
+        .getElementById("refreshModal")
+        .style.display="none";
+
+}

@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RoomSync · Dashboard</title>
+  <title>RoommateFinder · Dashboard</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -30,7 +30,7 @@
             </defs>
           </svg>
         </span>
-        <span class="logo-text">Room<em>Sync</em></span>
+        <span class="logo-text">Roommate<em>Finder</em></span>
       </div>
 
       <nav class="sidebar-nav">
@@ -41,16 +41,7 @@
        
       
        
-        <a href="/messages" class="nav-item" data-tooltip="Messages">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5.5A2.5 2.5 0 0 1 5.5 3h13A2.5 2.5 0 0 1 21 5.5v9A2.5 2.5 0 0 1 18.5 17H10l-5 4v-4H5.5A2.5 2.5 0 0 1 3 14.5v-9Z"/></svg>
-          <span>Messages</span>
-          <span class="nav-badge">5</span>
-        </a>
-       
-        <a href="/settings" class="nav-item" data-tooltip="Settings">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 13.5a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V19.7a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.11-1.56 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.56-1.04H4.3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 5.95 8.5a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H10.4A1.7 1.7 0 0 0 11.44 2.6V2.5a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1.04 1.56 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V8.6c.14.62.56 1.14 1.14 1.44l.42.14a2 2 0 1 1 0 4Z" opacity="0"/></svg>
-          <span>Settings</span>
-        </a>
+        
       </nav>
 
       <div class="sidebar-footer">
@@ -81,7 +72,7 @@
               </linearGradient>
             </defs>
           </svg>
-          <span>RoomSync</span>
+          <span>Roommate<em>Finder</em></span>
         </div>
 
         
@@ -111,7 +102,7 @@
             <h1>Welcome back, <span class="grad-text"><%= user.name %></span></h1>
             <p class="subtext">View your hostel details and connect with your roommates.</p>
           </div>
-          <button class="btn-primary">
+          <button class="btn-primary" onclick="openRefresh()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
             Refresh SRM Data
           </button>
@@ -137,7 +128,7 @@
 
 <div class="empty-roommates">
     <h3>No roommates found yet</h3>
-    <p>Your roommates haven't logged into RoomSync yet.</p>
+    <p>Your roommates haven't logged into Roommate Finder yet.</p>
 </div>
 
 <% } else { %>
@@ -261,7 +252,43 @@ Not Yet Allotted
       </main>
     </div>
   </div>
+   <div class="refresh-modal" id="refreshModal">
 
+    <div class="refresh-box">
+
+        <h2>Refresh SRM Data</h2>
+
+        <p>Enter your SRM password to sync latest hostel details.</p>
+
+        <form action="/refresh" method="POST">
+
+            <input
+                type="password"
+                name="password"
+                placeholder="SRM Password"
+                required>
+
+            <div class="refresh-buttons">
+
+                <button type="submit">
+                    Refresh
+                </button>
+
+                <button
+                    type="button"
+                    onclick="closeRefresh()">
+
+                    Cancel
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
   <script src="/dashboard.js"></script>
 </body>
 </html>

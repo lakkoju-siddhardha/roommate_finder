@@ -107,22 +107,31 @@ async function getUser(regNo) {
 
     return rows[0];
 }
-
-module.exports = {
-    saveUser,
-    getUser
-};
-async function getUser(regNo) {
+async function userExists(regNo) {
 
     const [rows] = await db.execute(
-        "SELECT * FROM users WHERE reg_no = ?",
+        "SELECT reg_no FROM users WHERE reg_no = ?",
         [regNo]
     );
 
-    return rows[0];
+    return rows.length > 0;
 }
+async function getUserName(regNo) {
 
+    const [rows] = await db.execute(
+        "SELECT name FROM users WHERE reg_no = ?",
+        [regNo]
+    );
+
+    if (rows.length === 0) {
+        return null;
+    }
+
+    return rows[0].name;
+}
 module.exports = {
     saveUser,
-    getUser
+    getUser,
+    userExists,
+    getUserName
 };
