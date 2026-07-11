@@ -434,7 +434,130 @@ ul { list-style: none; margin: 0; padding: 0; }
     font-size:15px;
     font-weight:600;
 }
+/* ===================== MY ROOMMATES ===================== */
 
+.roommates-card{
+    
+    padding:24px;
+    border-radius:20px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+}
+
+.card-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:24px;
+}
+
+.card-header h2{
+    margin:0;
+    font-size:24px;
+    font-weight:700;
+    color:#fff;
+}
+
+.card-header p{
+    margin-top:5px;
+    color:#8B93A7;
+    font-size:14px;
+}
+
+.room-count{
+    padding:8px 16px;
+    border-radius:999px;
+    background:rgba(0,245,255,.12);
+    color:#00F5FF;
+    font-size:13px;
+    font-weight:600;
+}
+
+.roommate-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 0;
+    border-bottom:1px solid rgba(255,255,255,.08);
+    gap:20px;
+}
+
+.roommate-item:last-child{
+    border-bottom:none;
+}
+
+.roommate-info{
+    flex:1;
+}
+
+.roommate-name{
+    margin:0;
+    font-size:24px;
+    font-weight:700;
+    color:#fff;
+}
+
+.roommate-branch{
+    margin-top:8px;
+    color:#9CA3AF;
+    font-size:15px;
+    line-height:1.5;
+}
+
+.chat-btn{
+    min-width:120px;
+    height:48px;
+    border:none;
+    border-radius:999px;
+    cursor:pointer;
+    background:linear-gradient(90deg,#00F5FF,#7C3AED);
+    color:#081018;
+    font-weight:700;
+    transition:.3s;
+}
+
+.chat-btn:hover{
+    transform:translateY(-2px);
+    box-shadow:0 0 20px rgba(0,245,255,.4);
+}
+
+.empty-roommates{
+    text-align:center;
+    padding:50px 20px;
+}
+
+.empty-roommates h3{
+    margin-bottom:10px;
+    color:#fff;
+}
+
+.empty-roommates p{
+    color:#8B93A7;
+    max-width:420px;
+    margin:auto;
+    line-height:1.6;
+}
+
+@media(max-width:768px){
+
+    .card-header{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:12px;
+    }
+
+    .roommate-item{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:16px;
+    }
+
+    .chat-btn{
+        width:100%;
+    }
+
+}
 /* ---------------- charts ---------------- */
 
 .chart-grid {

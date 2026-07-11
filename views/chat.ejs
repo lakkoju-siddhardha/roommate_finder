@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>RoomSync Chat</title>
+
+    <link rel="stylesheet" href="/chat.css">
+
+</head>
+
+<body>
+
+<div class="chat-container">
+
+    <header class="chat-header">
+
+        <a href="/dashboard" class="back-btn">←</a>
+
+        <div class="user-details">
+
+            <h2><%= receiver %></h2>
+
+            <span>Roommate</span>
+
+        </div>
+
+    </header>
+
+    <main class="chat-messages" id="chatBox">
+
+        <% messages.forEach(message => { %>
+
+            <% if(message.sender_reg_no === sender){ %>
+
+                <div class="message sent">
+
+                    <p><%= message.message %></p>
+
+                </div>
+
+            <% } else { %>
+
+                <div class="message received">
+
+                    <p><%= message.message %></p>
+
+                </div>
+
+            <% } %>
+
+        <% }) %>
+
+    </main>
+
+    <form class="chat-input">
+    <input
+        type="hidden"
+        id="sender"
+        value="<%= sender %>">
+    <input
+        type="hidden"
+        id="receiver"
+        value="<%= receiver %>">
+
+    <input
+        id="message"
+        type="text"
+        placeholder="Type a message...">
+
+    <button>
+        Send
+    </button>
+
+</form>
+
+</div>
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script src="/chat.js"></script>
+
+</body>
+
+</html>

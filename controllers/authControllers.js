@@ -1,19 +1,16 @@
 const loginToSRM = require("../automation/login");
-const { getUser } = require("../models/userModel");
 
 async function login(req, res) {
+
     try {
 
         const { regNo, password } = req.body;
 
-        // Login to SRM, scrape data, save to MySQL
         await loginToSRM(regNo, password);
 
-        // Fetch the saved user from MySQL
-        const user = await getUser(regNo);
+        req.session.regNo = regNo;
 
-        // Render dashboard with real data
-        res.render("dashboard", { user });
+        res.redirect("/dashboard");
 
     } catch (err) {
 
@@ -24,6 +21,24 @@ async function login(req, res) {
     }
 }
 
+
+async function logout(req, res) {
+
+    req.session.destroy((err) => {
+
+        if (err) {
+            return res.status(500).send("Logout Failed");
+        }
+
+        res.clearCookie("connect.sid");
+
+        res.redirect("/");
+
+    });
+
+}
+
 module.exports = {
-    login
+    login,
+    logout
 };

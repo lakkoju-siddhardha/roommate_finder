@@ -1,48 +1,110 @@
+require("dotenv").config();
+
 const express = require("express");
+const session = require("express-session");
 const path = require("path");
+const http = require("http");
+const { Server } = require("socket.io");
+
+const { getUser } = require("./models/userModel");
+const { getRoommates } = require("./models/roommateModel");
 
 const authRoutes = require("./routes/authRoutes");
+const roommateRoutes = require("./routes/roommateRoutes");
+const chatRoutes = require("./routes/chatRoutes");
 
 const app = express();
+
+// Create HTTP Server
+const server = http.createServer(app);
+
+// Create Socket.IO Server
+const io = new Server(server);
+
+// Make io available everywhere
+app.set("io", io);
+
+// ---------------- Socket.IO ----------------
+
+io.on("connection", (socket) => {
+
+    console.log("User Connected:", socket.id);
+
+    socket.on("join", (regNo) => {
+
+        socket.join(regNo);
+
+        console.log(`${regNo} joined`);
+
+    });
+
+    socket.on("disconnect", () => {
+
+        console.log("User Disconnected");
+
+    });
+
+});
+
+// ---------------- Express ----------------
 
 app.set("view engine", "ejs");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+app.use(session({
+    secret: process.env.SESSION_SECRET || "roomsync-secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 24 * 60 * 60 * 1000
+    }
+}));
+
 app.use(express.static(path.join(__dirname, "public")));
 
+// ---------------- Routes ----------------
+
 app.use("/", authRoutes);
+app.use("/", roommateRoutes);
+app.use("/", chatRoutes);
+
+// ---------------- Pages ----------------
 
 app.get("/", (req, res) => {
     res.render("login");
 });
 
-app.get("/dashboard", (req, res) => {
+app.get("/dashboard", async (req, res) => {
 
-    const user = {
-        reg_no: "AP25110010998",
-        name: "Lakkoju Siddhardha",
+    if (!req.session.regNo) {
+        return res.redirect("/");
+    }
 
-        room_type: "4 Bunker Sharing A/C",
+    try {
 
-        block_name: "GANGA B",
+        const user = await getUser(req.session.regNo);
 
-        tower: "Level 5",
+        const roommates = await getRoommates(req.session.regNo);
 
-        room_number: "553",
+        res.render("dashboard", {
+            user,
+            roommates
+        });
 
-        academic_year: "2025-2026",
+    } catch (err) {
 
-        allotted_date: "25-Aug-2025",
+        console.error(err);
 
-        hostel_status: "Hosteller"
-    };
+        res.status(500).send("Server Error");
 
-    res.render("dashboard", { user });
+    }
 
 });
 
-app.listen(3000, () => {
-    console.log("Server running on http://localhost:3000");
+// ---------------- Start Server ----------------
+
+server.listen(3000, () => {
+    console.log("🚀 Server running on http://localhost:3000");
 });

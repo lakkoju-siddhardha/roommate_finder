@@ -1,0 +1,24 @@
+<html>
+    <head></head>
+    <body><h1>My Roommates</h1>
+
+<% if(roommates.length===0){ %>
+
+<h2>No roommates found.</h2>
+
+<% } %>
+
+<% roommates.forEach(roommate=>{ %>
+
+<div class="card">
+
+<h2><%= roommate.name %></h2>
+
+<p><%= roommate.branch %></p>
+
+<button>Chat</button>
+
+</div>
+
+<% }) %></body>
+</html>

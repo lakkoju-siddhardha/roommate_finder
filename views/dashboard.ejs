@@ -38,28 +38,15 @@
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="8" height="8" rx="2"/><rect x="13" y="3" width="8" height="5" rx="2"/><rect x="13" y="12" width="8" height="9" rx="2"/><rect x="3" y="14" width="8" height="7" rx="2"/></svg>
           <span>Dashboard</span>
         </a>
-        <a href="/profile" class="nav-item" data-tooltip="My Profile">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 5-6 8-6s6.5 2 8 6"/></svg>
-          <span>My Profile</span>
-        </a>
-        <a href="/find-roommates" class="nav-item" data-tooltip="Find Roommates">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="9" r="3.5"/><path d="M3.5 20c.8-3.2 3-5 5.5-5s4.7 1.8 5.5 5"/><circle cx="18" cy="8" r="2.5"/><path d="M15.5 13.2c2.2.2 3.9 1.8 4.5 4.3"/></svg>
-          <span>Find Roommates</span>
-        </a>
-        <a href="/friend-requests" class="nav-item" data-tooltip="Friend Requests">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="9" cy="9" r="3.5"/><path d="M2.5 20c.8-3.2 3-5 6.5-5s5.7 1.8 6.5 5"/><path d="M17 8h5M19.5 5.5v5"/></svg>
-          <span>Friend Requests</span>
-          <span class="nav-badge">3</span>
-        </a>
+       
+      
+       
         <a href="/messages" class="nav-item" data-tooltip="Messages">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 5.5A2.5 2.5 0 0 1 5.5 3h13A2.5 2.5 0 0 1 21 5.5v9A2.5 2.5 0 0 1 18.5 17H10l-5 4v-4H5.5A2.5 2.5 0 0 1 3 14.5v-9Z"/></svg>
           <span>Messages</span>
           <span class="nav-badge">5</span>
         </a>
-        <a href="/notifications" class="nav-item" data-tooltip="Notifications">
-          <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 9a6 6 0 1 1 12 0c0 4 1.5 5.5 1.5 5.5H4.5S6 13 6 9Z"/><path d="M10 19a2 2 0 0 0 4 0"/></svg>
-          <span>Notifications</span>
-        </a>
+       
         <a href="/settings" class="nav-item" data-tooltip="Settings">
           <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="3"/><path d="M19.4 13.5a1.7 1.7 0 0 0 .34 1.87l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.7 1.7 0 0 0-1.87-.34 1.7 1.7 0 0 0-1.04 1.56V19.7a2 2 0 1 1-4 0v-.09a1.7 1.7 0 0 0-1.11-1.56 1.7 1.7 0 0 0-1.87.34l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.7 1.7 0 0 0 .34-1.87 1.7 1.7 0 0 0-1.56-1.04H4.3a2 2 0 1 1 0-4h.09A1.7 1.7 0 0 0 5.95 8.5a1.7 1.7 0 0 0-.34-1.87l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.7 1.7 0 0 0 1.87.34H10.4A1.7 1.7 0 0 0 11.44 2.6V2.5a2 2 0 1 1 4 0v.09a1.7 1.7 0 0 0 1.04 1.56 1.7 1.7 0 0 0 1.87-.34l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.7 1.7 0 0 0-.34 1.87V8.6c.14.62.56 1.14 1.14 1.44l.42.14a2 2 0 1 1 0 4Z" opacity="0"/></svg>
           <span>Settings</span>
@@ -97,11 +84,7 @@
           <span>RoomSync</span>
         </div>
 
-        <div class="navbar-search">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.2-3.2"/></svg>
-          <input type="text" id="searchInput" placeholder="Search roommates, rooms, messages…" autocomplete="off" />
-          
-        </div>
+        
 
         <div class="navbar-actions">
           <button class="icon-btn" id="notifBtn" aria-label="Notifications">
@@ -110,9 +93,9 @@
           </button>
 
           <div class="user-profile" id="userProfile">
-            <div class="avatar">A</div>
+            <div class="avatar">s</div>
             <div class="user-meta">
-            <span class="user-name"><%= user.reg_no %></span>
+            <span class="user-name"><%= user.name %></span>
             <span class="user-role">Hosteller</span>
             </div>
             <svg class="chevron" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
@@ -125,19 +108,74 @@
 
         <div class="content-head">
           <div>
-            <h1>Welcome back, <span class="grad-text"><%= user.reg_no %></span></h1>
-            <p class="subtext">Here's what's happening with your room search today.</p>
+            <h1>Welcome back, <span class="grad-text"><%= user.name %></span></h1>
+            <p class="subtext">View your hostel details and connect with your roommates.</p>
           </div>
           <button class="btn-primary">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
-            Find a Roommate
+            Refresh SRM Data
           </button>
         </div>
 
         <!-- ===================== STAT CARDS ===================== -->
         <section class="stat-grid">
 
-         <article class="stat-card glass" style="--accent:#00F5FF">
+         <section class="roommates-card glass">
+
+    <div class="card-header">
+        <div>
+            <h2>👥 My Roommates</h2>
+            <p>Students sharing your room</p>
+        </div>
+
+        <span class="room-count">
+            <%= roommates ? roommates.length : 0 %> Roommates
+        </span>
+    </div>
+
+   <% if (roommates.length === 0) { %>
+
+<div class="empty-roommates">
+    <h3>No roommates found yet</h3>
+    <p>Your roommates haven't logged into RoomSync yet.</p>
+</div>
+
+<% } else { %>
+
+    <% roommates.forEach(roommate => { %>
+
+   <div class="roommate-item">
+
+    <div class="roommate-info">
+
+        <h3 class="roommate-name">
+            <%= roommate.name %>
+        </h3>
+
+        <p class="roommate-branch">
+            <%= roommate.branch
+                .replace("B.Tech.-", "")
+                .replace("[UG - Full Time]", "")
+                .trim() %>
+        </p>
+
+    </div>
+
+    <button class="chat-btn">
+     <a href="/chat/<%= roommate.reg_no %>" class="chat-btn">
+    💬 Chat
+</a>
+    </button>
+
+</div>
+
+    <% }) %>
+
+<% } %>
+
+         </section>
+         
+          <article class="stat-card glass" style="--accent:#00F5FF">
     <div class="stat-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
             <path d="M3 10.5 12 4l9 6.5"/>
@@ -175,7 +213,7 @@
         </div>
 
     </div>
-</article>
+         </article>
 
           <article class="stat-card glass" style="--accent:#7C3AED">
             <div class="stat-icon">
@@ -207,20 +245,15 @@ Not Yet Allotted
             </div>
           </article>
 
-          
+          <!-- ===================== MY ROOMMATES ===================== -->
+
+
 
           
 
         </section>
 
-        <!-- ===================== CHARTS ===================== -->
-        <section class="chart-grid">
-
-          
-
-          
-
-        </section>
+       
 
         <!-- ===================== RECENT ACTIVITY ===================== -->
        
