@@ -4,7 +4,7 @@ async function sendRoommateMail(to, roommate) {
 
     await transporter.sendMail({
 
-        from: `"RoomSync" <${process.env.EMAIL_USER}>`,
+        from: `"SRMAPrommmateFinder" <${process.env.EMAIL_USER}>`,
 
         to,
 
@@ -57,7 +57,7 @@ async function sendRoommateMail(to, roommate) {
 
             <p>
 
-                Login to RoomSync and start chatting.
+                Login to SRMAPrommmateFinder and start chatting.
 
             </p>
 
