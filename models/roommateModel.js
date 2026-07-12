@@ -39,7 +39,38 @@ async function getRoommates(regNo) {
    
     return roommates;
 }
+async function getRoommatesByRoom(block, tower, roomNumber, currentRegNo) {
 
+    const [rows] = await db.execute(
+
+        `
+
+        SELECT *
+
+        FROM users
+
+        WHERE block_name = ?
+        AND tower = ?
+        AND room_number = ?
+        AND reg_no <> ?
+
+        `,
+
+        [
+
+            block,
+            tower,
+            roomNumber,
+            currentRegNo
+
+        ]
+
+    );
+
+    return rows;
+
+}
 module.exports = {
-    getRoommates
+    getRoommates,
+    getRoommatesByRoom
 };

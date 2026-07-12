@@ -1,5 +1,3 @@
-
-
 const db = require("../database/db");
 
 function convertDate(dateStr) {
@@ -24,11 +22,24 @@ function convertDate(dateStr) {
     const [day, month, year] = dateStr.split("-");
 
     return `${year}-${months[month]}-${day}`;
+
 }
 
 async function saveUser(profile, hostel) {
 
+    // Check whether the user already exists
+    const [existing] = await db.execute(
+
+        "SELECT reg_no FROM users WHERE reg_no = ?",
+
+        [profile.regNo]
+
+    );
+
+    const isNewUser = existing.length === 0;
+
     const query = `
+
     INSERT INTO users (
 
         reg_no,
@@ -37,6 +48,8 @@ async function saveUser(profile, hostel) {
         semester,
         dob,
         gender,
+        email,
+        phone,
 
         academic_year,
         allotted_date,
@@ -47,7 +60,7 @@ async function saveUser(profile, hostel) {
 
     )
 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
 
     ON DUPLICATE KEY UPDATE
 
@@ -56,6 +69,8 @@ async function saveUser(profile, hostel) {
         semester = VALUES(semester),
         dob = VALUES(dob),
         gender = VALUES(gender),
+        email = VALUES(email),
+        phone = VALUES(phone),
 
         academic_year = VALUES(academic_year),
         allotted_date = VALUES(allotted_date),
@@ -65,73 +80,88 @@ async function saveUser(profile, hostel) {
         room_type = VALUES(room_type),
 
         last_synced = CURRENT_TIMESTAMP
+
     `;
 
     await db.execute(query, [
 
         profile.regNo,
-
         profile.name,
-
         profile.branch,
-
         profile.semester,
-
         convertDate(profile.dob),
-
         profile.gender,
+        profile.email,
+        profile.phone,
 
         hostel.academicYear,
-
         hostel.allottedDate,
-
         hostel.block,
-
         hostel.tower,
-
         hostel.roomNumber,
-
         hostel.roomType
 
     ]);
 
     console.log("✅ User Saved Successfully");
+
+    return isNewUser;
+
 }
 
 async function getUser(regNo) {
 
     const [rows] = await db.execute(
+
         "SELECT * FROM users WHERE reg_no = ?",
+
         [regNo]
+
     );
 
     return rows[0];
+
 }
+
 async function userExists(regNo) {
 
     const [rows] = await db.execute(
+
         "SELECT reg_no FROM users WHERE reg_no = ?",
+
         [regNo]
+
     );
 
     return rows.length > 0;
+
 }
+
 async function getUserName(regNo) {
 
     const [rows] = await db.execute(
+
         "SELECT name FROM users WHERE reg_no = ?",
+
         [regNo]
+
     );
 
     if (rows.length === 0) {
+
         return null;
+
     }
 
     return rows[0].name;
+
 }
+
 module.exports = {
+
     saveUser,
     getUser,
     userExists,
     getUserName
+
 };

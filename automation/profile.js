@@ -14,20 +14,55 @@ async function getProfileDetails(page) {
         const value = cells[2].trim();
 
         profile[key] = value;
+
     }
 
-const dobGender = profile["D.O.B. / Gender"] || "";
+    // ---------------- DOB & Gender ----------------
 
-const [dob, gender] = dobGender.split("/").map(item => item.trim());
+    const dobGender = profile["D.O.B. / Gender"] || "";
 
-return {
-    name: profile["Student Name"],
-    regNo: profile["Register No."],
-    semester: profile["Semester"],
-    branch: profile["Program / Section"],
-    dob,
-    gender
-};
+    const [dob, gender] =
+        dobGender.split("/").map(item => item.trim());
+
+    // ---------------- Phone & Email ----------------
+
+ const contact = profile["Student Contact Number / Email"] || "";
+
+let phone = "";
+let email = "";
+
+const parts = contact.split("/");
+
+if (parts.length >= 2) {
+
+    phone = parts[0]
+        .replace(/\(.*?\)/g, "")   // removes anything inside ()
+        .trim();
+
+    email = parts[1].trim();
+
+}
+       
+    return {
+
+        name: profile["Student Name"],
+
+        regNo: profile["Register No."],
+
+        semester: profile["Semester"],
+
+        branch: profile["Program / Section"],
+
+        phone,
+
+        email,
+
+        dob,
+
+        gender
+
+    };
+
 }
 
 module.exports = getProfileDetails;

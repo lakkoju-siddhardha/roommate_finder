@@ -85,11 +85,32 @@ async function scrape(req, res) {
 
     } catch (err) {
 
-        console.error(err);
+    console.error(err);
 
-        res.status(500).send("Scraping Failed");
+    delete req.session.tempRegNo;
+    delete req.session.tempPassword;
+
+    if (err.message === "INVALID_CREDENTIALS") {
+
+     return res.render("login", {
+    error: "Incorrect Registration Number or Password."
+});;
 
     }
+
+    if (err.message === "CAPTCHA_FAILED") {
+
+        return res.render("login", {
+    error: "Couldn't verify the captcha. Please try again."
+});
+
+    }
+
+    return res.render("login", {
+        error: "Unable to connect to SRM. Please try again."
+    });
+
+}
 
 }
 
@@ -141,12 +162,11 @@ async function logout(req, res) {
 
     } catch (err) {
 
-        console.error(err);
+    console.error(err);
 
-        res.status(500).send("Refresh Failed");
+    res.status(500).send("Refresh Failed");
 
-    }
-
+}
 }
 async function refreshProcess(req, res) {
 
@@ -169,12 +189,25 @@ async function refreshProcess(req, res) {
 
     } catch (err) {
 
-        console.error(err);
+    console.error(err);
 
-        res.status(500).send("Refresh Failed");
+    delete req.session.refreshPassword;
+
+    if (err.message === "INVALID_CREDENTIALS") {
+
+        return res.send("Incorrect password.");
 
     }
 
+    if (err.message === "CAPTCHA_FAILED") {
+
+        return res.send("Captcha verification failed. Please try again.");
+
+    }
+
+    res.send("Unable to refresh data.");
+
+}
 }
 module.exports = {
     login,
