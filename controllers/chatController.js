@@ -7,6 +7,8 @@ const {
     getUserName
 } = require("../models/userModel");
 
+// ---------------- OPEN CHAT ----------------
+
 async function openChat(req, res) {
 
     const sender = req.session.regNo;
@@ -26,6 +28,8 @@ async function openChat(req, res) {
 
 }
 
+// ---------------- SEND MESSAGE ----------------
+
 async function sendMessage(req, res) {
 
     try {
@@ -35,11 +39,18 @@ async function sendMessage(req, res) {
         const { receiver, message } = req.body;
 
         if (!message || message.trim() === "") {
-            return res.status(400).send("Message cannot be empty");
+
+            return res.status(400).json({
+                success: false,
+                message: "Message cannot be empty"
+            });
+
         }
 
+        // Save message
         await saveMessage(sender, receiver, message);
 
+        // Notify only the receiver
         const io = req.app.get("io");
 
         io.to(receiver).emit("receive-message", {
@@ -55,7 +66,10 @@ async function sendMessage(req, res) {
 
         console.error(err);
 
-        res.status(500).send("Error sending message");
+        res.status(500).json({
+            success: false,
+            message: "Error sending message"
+        });
 
     }
 

@@ -84,7 +84,9 @@
           </button>
 
           <div class="user-profile" id="userProfile">
-            <div class="avatar">s</div>
+            <div class="avatar">
+    <%= user.name.charAt(0).toUpperCase() %>
+</div>
             <div class="user-meta">
             <span class="user-name"><%= user.name %></span>
             <span class="user-role">Hosteller</span>
@@ -102,6 +104,10 @@
             <h1>Welcome back, <span class="grad-text"><%= user.name %></span></h1>
             <p class="subtext">View your hostel details and connect with your roommates.</p>
           </div>
+          <div class="refresh-note">
+    Keep your hostel details up to date. Refresh to sync with SRM.
+</div>
+
           <button class="btn-primary" onclick="openRefresh()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
             Refresh SRM Data
@@ -289,6 +295,111 @@ Not Yet Allotted
     </div>
 
 </div>
+<div class="notification-popup" id="notificationPopup">
+
+    <div class="notification-header">
+        <h3>Notifications</h3>
+    </div>
+
+    <div class="notification-empty">
+
+        <div class="notification-icon">🔔</div>
+
+        <h4>No new notifications</h4>
+
+        <p>
+            We'll notify you when:
+        </p>
+
+        <ul>
+            <li>💬 You receive a new message</li>
+            <li>🏠 A roommate joins your room</li>
+            <li>🔄 Hostel details are updated</li>
+        </ul>
+
+    </div>
+
+</div>
+
+</div>
+<div class="profile-popup" id="profilePopup">
+
+    <div class="profile-top">
+
+        <div class="profile-avatar">
+            <%= user.name.charAt(0).toUpperCase() %>
+        </div>
+
+        <h3><%= user.name %></h3>
+
+    </div>
+
+    <div class="profile-details">
+
+        <div class="detail-row">
+
+            <div class="detail-icon">🆔</div>
+
+            <div class="detail-text">
+                <%= user.reg_no %>
+            </div>
+
+        </div>
+
+        <div class="detail-row">
+
+            <div class="detail-icon">🎂</div>
+
+            <div class="detail-text">
+                <%= new Date(user.dob).toLocaleDateString("en-GB", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric"
+                }) %>
+            </div>
+
+        </div>
+
+        <div class="detail-row">
+
+            <div class="detail-icon">👤</div>
+
+            <div class="detail-text">
+                <%= user.gender %>
+            </div>
+
+        </div>
+
+        <div class="detail-row">
+
+            <div class="detail-icon">🎓</div>
+
+            <div class="detail-text">
+                <%= user.branch %>
+            </div>
+
+        </div>
+
+        <div class="detail-row">
+
+            <div class="detail-icon">📚</div>
+
+            <div class="detail-text">
+                <%= user.semester %>
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+    <a href="/logout" class="profile-logout">
+        Logout
+    </a>
+
+</div>
+<div class="drawer-overlay" id="drawerOverlay"></div>
   <script src="/dashboard.js"></script>
 </body>
 </html>

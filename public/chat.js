@@ -1,67 +1,93 @@
 const socket = io();
+
 const chatBox = document.getElementById("chatBox");
 
 chatBox.scrollTop = chatBox.scrollHeight;
-const receiver =
-    document.getElementById("receiver").value;
 
-const sender =
-    document.getElementById("sender").value;
+const receiver = document.getElementById("receiver").value;
+const sender = document.getElementById("sender").value;
+
+const input = document.getElementById("message");
+const sendBtn = document.getElementById("sendBtn");
 
 // Join your own room
 socket.emit("join", sender);
 
-const form = document.querySelector(".chat-input");
+// ---------------- SEND MESSAGE ----------------
 
-form.addEventListener("submit", async (e) => {
+async function sendMessage() {
 
-    e.preventDefault();
+    const message = input.value.trim();
 
-    const input =
-        document.getElementById("message");
+    if (!message) return;
 
-    const message = input.value;
+    try {
 
-    if (!message.trim()) return;
+        await fetch("/chat/send", {
 
-   await fetch("/chat/send", {
+            method: "POST",
 
-    method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
 
-    headers: {
-        "Content-Type": "application/json"
-    },
+            body: JSON.stringify({
 
-    body: JSON.stringify({
+                receiver,
+                message
 
-        receiver,
-        message
+            })
 
-    })
+        });
 
-});
+        // Show message immediately
+        const messageDiv = document.createElement("div");
 
-const messageDiv = document.createElement("div");
+        messageDiv.className = "message sent";
 
-messageDiv.className = "message sent";
+        messageDiv.innerHTML = `
+            <p>${message}</p>
+        `;
 
-messageDiv.innerHTML = `
-    <p>${message}</p>
-`;
+        chatBox.appendChild(messageDiv);
 
-chatBox.appendChild(messageDiv);
+        chatBox.scrollTop = chatBox.scrollHeight;
 
-chatBox.scrollTop = chatBox.scrollHeight;
+        input.value = "";
 
-input.value = "";
+    } catch (err) {
 
-input.focus();
+        console.error(err);
 
-});
+    }
+
+}
+
+// Send button
+sendBtn.addEventListener("click", sendMessage);
+
+// Desktop Enter
+const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+if (!isMobile) {
+
+    input.addEventListener("keydown", (e) => {
+
+        if (e.key === "Enter") {
+
+            e.preventDefault();
+
+            sendMessage();
+
+        }
+
+    });
+
+}
+
+// ---------------- RECEIVE MESSAGE ----------------
 
 socket.on("receive-message", (data) => {
-
-    const chatBox = document.getElementById("chatBox");
 
     const messageDiv = document.createElement("div");
 

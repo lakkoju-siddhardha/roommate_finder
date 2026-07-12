@@ -172,3 +172,78 @@ function closeRefresh(){
         .style.display="none";
 
 }
+const notifBtn = document.getElementById("notifBtn");
+const notifPopup = document.getElementById("notificationPopup");
+
+const profileBtn = document.getElementById("userProfile");
+const profilePopup = document.getElementById("profilePopup");
+
+const drawerOverlay = document.getElementById("drawerOverlay");
+
+// ---------------- Notifications ----------------
+
+notifBtn.addEventListener("click", (e) => {
+
+    e.stopPropagation();
+
+    profilePopup.classList.remove("show");
+
+    notifPopup.classList.toggle("show");
+
+    drawerOverlay.classList.toggle(
+        "show",
+        notifPopup.classList.contains("show")
+    );
+
+});
+
+// ---------------- Profile ----------------
+
+profileBtn.addEventListener("click", (e) => {
+
+    e.stopPropagation();
+
+    notifPopup.classList.remove("show");
+
+    profilePopup.classList.toggle("show");
+
+    drawerOverlay.classList.toggle(
+        "show",
+        profilePopup.classList.contains("show")
+    );
+
+});
+
+// ---------------- Close Everything ----------------
+
+drawerOverlay.addEventListener("click", () => {
+
+    notifPopup.classList.remove("show");
+
+    profilePopup.classList.remove("show");
+
+    drawerOverlay.classList.remove("show");
+
+});
+
+document.addEventListener("click", () => {
+
+    notifPopup.classList.remove("show");
+
+    profilePopup.classList.remove("show");
+
+    drawerOverlay.classList.remove("show");
+
+});
+
+notifPopup.addEventListener("click", (e) => {
+
+    e.stopPropagation();
+
+});
+
+profilePopup.addEventListener("click", (e) => {
+
+    e.stopPropagation();
+
+});

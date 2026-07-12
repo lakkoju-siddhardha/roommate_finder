@@ -5,9 +5,13 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover">
 
     <title>RoomSync Chat</title>
+
+    <meta name="autocomplete" content="off">
 
     <link rel="stylesheet" href="/chat.css">
 
@@ -31,52 +35,59 @@
 
     </header>
 
-    <main class="chat-messages" id="chatBox">
+ <main class="chat-messages" id="chatBox">
 
-        <% messages.forEach(message => { %>
+    <% messages.forEach(message => { %>
 
-            <% if(message.sender_reg_no === sender){ %>
+        <% if(message.sender_reg_no === sender){ %>
 
-                <div class="message sent">
+            <div class="message sent">
+                <p><%= message.message %></p>
+            </div>
 
-                    <p><%= message.message %></p>
+        <% } else { %>
 
-                </div>
+            <div class="message received">
+                <p><%= message.message %></p>
+            </div>
 
-            <% } else { %>
+        <% } %>
 
-                <div class="message received">
+    <% }) %>
 
-                    <p><%= message.message %></p>
+</main>
 
-                </div>
+<div class="chat-input">
 
-            <% } %>
-
-        <% }) %>
-
-    </main>
-
-    <form class="chat-input">
     <input
         type="hidden"
         id="sender"
         value="<%= sender %>">
+
     <input
         type="hidden"
         id="receiver"
         value="<%= receiver %>">
 
     <input
-        id="message"
         type="text"
-        placeholder="Type a message...">
+        id="message"
+        name="chatMessage"
+        placeholder="Type a message..."
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false">
 
-    <button>
+    <button
+        type="button"
+        id="sendBtn">
+
         Send
+
     </button>
 
-</form>
+</div>
 
 </div>
 
