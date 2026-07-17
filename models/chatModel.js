@@ -32,8 +32,35 @@ async function saveMessage(sender, receiver, message) {
     );
 
 }
+async function isFirstMessage(sender, receiver) {
 
+    const [rows] = await db.execute(
+
+        `
+
+        SELECT COUNT(*) AS total
+
+        FROM messages
+
+        WHERE sender_reg_no = ?
+        AND receiver_reg_no = ?
+
+        `,
+
+        [
+
+            sender,
+            receiver
+
+        ]
+
+    );
+
+    return rows[0].total === 0;
+
+}
 module.exports = {
     getMessages,
-    saveMessage
+    saveMessage,
+    isFirstMessage
 };

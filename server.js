@@ -5,7 +5,7 @@ const session = require("express-session");
 const path = require("path");
 const http = require("http");
 const { Server } = require("socket.io");
-
+const PORT = process.env.PORT || 3000;
 const { getUser } = require("./models/userModel");
 const { getRoommates } = require("./models/roommateModel");
 
@@ -105,6 +105,6 @@ app.get("/dashboard", async (req, res) => {
 
 // ---------------- Start Server ----------------
 
-server.listen(3000, () => {
-    console.log("🚀 Server running on http://localhost:3000");
+server.listen(PORT, () => {
+    console.log(`Server running on http://localhost:3000`);
 });

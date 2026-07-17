@@ -157,11 +157,32 @@ async function getUserName(regNo) {
 
 }
 
+async function getUserEmail(regNo) {
+
+    const [rows] = await db.execute(
+
+        "SELECT email FROM users WHERE reg_no = ?",
+
+        [regNo]
+
+    );
+
+    if (rows.length === 0) {
+
+        return null;
+
+    }
+
+    return rows[0].email;
+
+}
 module.exports = {
 
     saveUser,
     getUser,
     userExists,
-    getUserName
-
+    getUserName,
+    getUserEmail
 };
+
+ 

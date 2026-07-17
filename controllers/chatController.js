@@ -1,11 +1,16 @@
 const {
     getMessages,
-    saveMessage
+    saveMessage,
+    isFirstMessage
 } = require("../models/chatModel");
 
 const {
-    getUserName
+    getUserName,
+    getUserEmail
 } = require("../models/userModel");
+
+const sendFirstMessageMail =
+    require("../utils/sendFirstMessageMail");
 
 // ---------------- OPEN CHAT ----------------
 
@@ -47,10 +52,50 @@ async function sendMessage(req, res) {
 
         }
 
-        // Save message
-        await saveMessage(sender, receiver, message);
+        // Check if this is the first message
+        const firstMessage = await isFirstMessage(
+            sender,
+            receiver
+        );
 
-        // Notify only the receiver
+        // Save message
+        await saveMessage(
+            sender,
+            receiver,
+            message
+        );
+
+        // Send first-message email (background)
+        if (firstMessage) {
+
+            const receiverEmail =
+                await getUserEmail(receiver);
+
+            const senderName =
+                await getUserName(sender);
+
+            if (receiverEmail) {
+
+                sendFirstMessageMail(
+
+                    receiverEmail,
+
+                    senderName
+
+                ).catch(err => {
+
+                    console.error(
+                        "Failed to send first message email:",
+                        err
+                    );
+
+                });
+
+            }
+
+        }
+
+        // Notify receiver in real time
         const io = req.app.get("io");
 
         io.to(receiver).emit("receive-message", {
