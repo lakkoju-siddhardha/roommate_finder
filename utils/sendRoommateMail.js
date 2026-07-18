@@ -4,62 +4,101 @@ async function sendRoommateMail(to, roommate) {
 
     await transporter.sendMail({
 
-        from: `"SRMAPrommmateFinder" <${process.env.EMAIL_USER}>`,
+        from: `"SRM AP RoomSync" <${process.env.EMAIL_USER}>`,
 
         to,
 
-        subject: "🎉 A New Roommate Joined!",
+        subject: "🎉 A New Roommate Joined Your Room!",
 
         html: `
 
-        <div style="font-family:Segoe UI;padding:30px">
+        <div style="
+            max-width:600px;
+            margin:auto;
+            font-family:'Segoe UI',Arial,sans-serif;
+            background:#ffffff;
+            border:1px solid #e5e7eb;
+            border-radius:12px;
+            overflow:hidden;
+        ">
 
-            <h2 style="color:#00B8FF">
-                🎉 You have a new roommate!
-            </h2>
+            <div style="
+                background:#00B8FF;
+                color:white;
+                padding:24px;
+                text-align:center;
+            ">
 
-            <p>
+                <h2 style="margin:0;">
+                    🎉 A New Roommate Joined!
+                </h2>
 
-                <strong>${roommate.name}</strong>
-                has joined your hostel room.
+            </div>
 
-            </p>
+            <div style="padding:30px; color:#374151;">
 
-            <table>
+                <p style="font-size:16px;">
+                    Great news! <strong>${roommate.name}</strong> has joined your hostel room on <strong>RoomSync</strong>.
+                </p>
 
-                <tr>
+                <table style="
+                    width:100%;
+                    border-collapse:collapse;
+                    margin:25px 0;
+                ">
 
-                    <td><b>Name</b></td>
+                    <tr>
+                        <td style="padding:10px;border-bottom:1px solid #eee;"><strong>Name</strong></td>
+                        <td style="padding:10px;border-bottom:1px solid #eee;">${roommate.name}</td>
+                    </tr>
 
-                    <td>${roommate.name}</td>
+                    <tr>
+                        <td style="padding:10px;border-bottom:1px solid #eee;"><strong>Registration No.</strong></td>
+                        <td style="padding:10px;border-bottom:1px solid #eee;">${roommate.regNo}</td>
+                    </tr>
 
-                </tr>
+                    <tr>
+                        <td style="padding:10px;border-bottom:1px solid #eee;"><strong>Branch</strong></td>
+                        <td style="padding:10px;border-bottom:1px solid #eee;">${roommate.branch}</td>
+                    </tr>
 
-                <tr>
+                </table>
 
-                    <td><b>Registration No.</b></td>
+                <div style="text-align:center;margin:35px 0;">
 
-                    <td>${roommate.regNo}</td>
+                    <a
+                        href="https://roommate-finder-zgkj.onrender.com"
+                        style="
+                            display:inline-block;
+                            background:#00B8FF;
+                            color:white;
+                            text-decoration:none;
+                            padding:14px 28px;
+                            border-radius:8px;
+                            font-weight:bold;
+                        "
+                    >
+                        Open RoomSync
+                    </a>
 
-                </tr>
+                </div>
 
-                <tr>
+                <p style="font-size:15px;line-height:1.7;">
+                    You can now chat with your roommate, view their profile, and connect before arriving on campus.
+                </p>
 
-                    <td><b>Branch</b></td>
+                <hr style="border:none;border-top:1px solid #e5e7eb;margin:30px 0;">
 
-                    <td>${roommate.branch}</td>
+                <p style="
+                    color:#6b7280;
+                    font-size:13px;
+                    text-align:center;
+                    margin:0;
+                ">
+                    Thanks for using <strong>SRM AP Roommatefinder</strong> ❤️
+                </p>
 
-                </tr>
-
-            </table>
-
-            <br>
-
-            <p>
-
-                Login to SRMAPrommmateFinder and start chatting. through the <a href="https://roommate-finder-zgkj.onrender.com">SRMAPrommateFinder</a> platform.
-
-            </p>
+            </div>
 
         </div>
 

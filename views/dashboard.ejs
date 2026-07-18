@@ -134,7 +134,17 @@
 
 <div class="empty-roommates">
     <h3>No roommates found yet</h3>
-    <p>Your roommates haven't logged into Roommate Finder yet. <a href="https://roommate-finder-zgkj.onrender.com">srmaproommatefinder</a></p>
+
+    <p>
+        Your roommates haven't logged in yet.
+        Invite them to join <strong>RoomSync</strong>.
+    </p>
+
+    <button class="share-btn" onclick="copyRoommateLink()">
+        📋 Copy Invite Link
+    </button>
+
+    <small>Share it in your WhatsApp group or send it directly to your roommates.</small>
 </div>
 
 <% } else { %>
@@ -216,17 +226,11 @@
             <div class="stat-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 9.5h16M9 4v16"/></svg>
             </div>
-            <div class="stat-body">
-              <span class="stat-label"><%= user.academic_year %></span>
-              <span class="stat-value">Allotted Date</span>
-              <span class="stat-sub"><%= user.allotted_date %></span>
-            </div>
+            
           </article>
 
           <article class="stat-card glass" style="--accent:#34D399">
-            <div class="stat-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M8.5 12.5l2.3 2.3L16 10"/></svg>
-            </div>
+           
             <div class="stat-body">
               <span class="stat-label">Hostel  Status</span>
               <span class="stat-value"><% if(user.room_number){ %>
@@ -242,8 +246,7 @@ Not Yet Allotted
             </div>
           </article>
 
-          <!-- ===================== MY ROOMMATES ===================== -->
-
+          
 
 
           

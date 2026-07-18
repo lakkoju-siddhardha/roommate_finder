@@ -247,3 +247,14 @@ profilePopup.addEventListener("click", (e) => {
     e.stopPropagation();
 
 });
+function copyRoommateLink() {
+    navigator.clipboard.writeText("https://roommate-finder-zgkj.onrender.com");
+
+    const btn = document.querySelector(".share-btn");
+
+    btn.innerHTML = "✅ Link Copied!";
+
+    setTimeout(() => {
+        btn.innerHTML = "📋 Copy Invite Link";
+    }, 2000);
+}
