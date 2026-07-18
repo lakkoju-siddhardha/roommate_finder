@@ -13,11 +13,29 @@ async function loginToSRM(regNo, password) {
 
     try {
 
-        await page.goto("https://student.srmap.edu.in/", {
-            waitUntil: "domcontentloaded"
-        });
+        console.log("🌐 Opening SRM Portal...");
 
-        let loggedIn = false;
+        await page.setViewportSize({
+            width: 1366,
+            height: 768
+        });
+await page.goto("https://student.srmap.edu.in/", {
+    waitUntil: "domcontentloaded"
+});
+
+// Debug logs
+console.log("Current URL:", page.url());
+
+console.log("Page Title:", await page.title());
+
+await page.screenshot({
+    path: "homepage.png",
+    fullPage: true
+});
+
+console.log("Homepage screenshot captured.");
+
+let loggedIn = false;
 
         // ---------------- CAPTCHA RETRY ----------------
 
@@ -25,8 +43,6 @@ async function loginToSRM(regNo, password) {
 
             console.log(`🔄 Login Attempt ${attempt}/3`);
 
-            // SRM clears these fields after captcha failure,
-            // so fill them every attempt.
             await page.getByRole("textbox", {
                 name: "Enter Application Number /"
             }).fill(regNo);
@@ -35,26 +51,23 @@ async function loginToSRM(regNo, password) {
                 name: "Password"
             }).fill(password);
 
-            // Capture captcha
             const captcha = page.locator("#frmSL").getByRole("img");
 
             await captcha.screenshot({
                 path: "public/images/captcha.png"
             });
 
+            console.log("🧠 Solving Captcha...");
+
             const captchaText = await solveCaptcha(
                 "public/images/captcha.png"
             );
 
-            await page.getByRole("textbox", {
-                name: "Enter Captcha Text"
-            }).fill("");
+            console.log("✅ OCR Result:", captchaText);
 
             await page.getByRole("textbox", {
                 name: "Enter Captcha Text"
             }).fill(captchaText);
-
-            console.log("Captcha:", captchaText);
 
             await page.getByRole("button", {
                 name: "Login"
@@ -62,7 +75,7 @@ async function loginToSRM(regNo, password) {
 
             await page.waitForTimeout(1500);
 
-            // ---------------- INVALID PASSWORD ----------------
+            // Invalid Credentials
 
             const invalidUser = await page
                 .locator("text=Invalid User ID or Password")
@@ -75,7 +88,7 @@ async function loginToSRM(regNo, password) {
 
             }
 
-            // ---------------- CAPTCHA FAILED ----------------
+            // Invalid Captcha
 
             const invalidCaptcha = await page
                 .locator("text=Captcha Invalid")
@@ -84,20 +97,16 @@ async function loginToSRM(regNo, password) {
 
             if (invalidCaptcha) {
 
-                console.log(`❌ Captcha failed (${attempt}/3)`);
+                console.log(`❌ Captcha Failed (${attempt}/3)`);
 
                 continue;
 
             }
 
-            // ---------------- LOGIN SUCCESS ----------------
-
             try {
 
                 await page.waitForSelector("text=Hostel", {
-
                     timeout: 5000
-
                 });
 
                 loggedIn = true;
@@ -108,7 +117,7 @@ async function loginToSRM(regNo, password) {
 
             } catch {
 
-                console.log("Waiting for next retry...");
+                console.log("⚠️ Login not completed. Retrying...");
 
             }
 
@@ -120,11 +129,17 @@ async function loginToSRM(regNo, password) {
 
         }
 
-        // ---------------- FETCH PROFILE ----------------
+        // ---------------- PROFILE ----------------
 
-        await page.waitForTimeout(3000);
+        console.log("📄 Fetching Profile...");
 
         const profile = await getProfileDetails(page);
+
+        console.log("✅ Profile Loaded");
+
+        // ---------------- HOSTEL ----------------
+
+        console.log("🏠 Opening Hostel Page...");
 
         await page.getByText("Hostel", {
             exact: true
@@ -138,17 +153,19 @@ async function loginToSRM(regNo, password) {
 
         const hostel = await getHostelDetails(page);
 
-        // ---------------- SAVE USER ----------------
+        console.log("✅ Hostel Details Loaded");
+
+        // ---------------- DATABASE ----------------
 
         const isNewUser = await saveUser(profile, hostel);
 
         console.log("✅ User Saved");
 
-        // ---------------- EMAIL ROOMMATES ----------------
+        // ---------------- EMAIL ----------------
 
         if (isNewUser) {
 
-            console.log("🎉 First login detected.");
+            console.log("🎉 First Login");
 
             const roommates = await getRoommatesByRoom(
 
@@ -159,13 +176,18 @@ async function loginToSRM(regNo, password) {
 
             );
 
+            console.log(`👥 Roommates Found: ${roommates.length}`);
+
             if (roommates.length > 0) {
 
                 await Promise.all(
 
                     roommates
+
                         .filter(roommate => roommate.email)
+
                         .map(roommate =>
+
                             sendRoommateMail(
 
                                 roommate.email,
@@ -179,21 +201,18 @@ async function loginToSRM(regNo, password) {
                                 }
 
                             )
+
                         )
 
                 );
 
-                console.log("📧 Roommate notification emails sent.");
-
-            } else {
-
-                console.log("No roommates found.");
+                console.log("📧 Emails Sent");
 
             }
 
         } else {
 
-            console.log("ℹ️ Existing user. Skipping emails.");
+            console.log("ℹ️ Existing User");
 
         }
 
@@ -201,7 +220,31 @@ async function loginToSRM(regNo, password) {
 
     } catch (err) {
 
-        await browser.close();
+        console.error("====================================");
+        console.error("❌ LOGIN ERROR");
+        console.error(err);
+        console.error(err.stack);
+        console.error("====================================");
+
+        try {
+
+            await page.screenshot({
+
+                path: "error.png",
+
+                fullPage: true
+
+            });
+
+            console.log("📸 Error Screenshot Saved");
+
+        } catch {}
+
+        try {
+
+            await browser.close();
+
+        } catch {}
 
         throw err;
 

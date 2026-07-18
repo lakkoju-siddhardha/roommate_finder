@@ -3,33 +3,75 @@ const Tesseract = require("tesseract.js");
 
 async function solveCaptcha(imagePath) {
 
-    // Preprocess the image
-    const processedImage = imagePath.replace(".png", "_processed.png");
+    try {
 
-    await sharp(imagePath)
-        .grayscale()
-        .normalize()
-        .threshold(150)
-        .toFile(processedImage);
+        console.log("📷 Processing Captcha Image...");
 
-    console.log("Image Processed");
+        const processedImage = imagePath.replace(
+            ".png",
+            "_processed.png"
+        );
 
-    // OCR
-    const { data } = await Tesseract.recognize(
-        processedImage,
-        "eng",
-        {
-            logger: m => console.log(m.status)
+        await sharp(imagePath)
+            .grayscale()
+            .normalize()
+            .threshold(150)
+            .toFile(processedImage);
+
+        console.log("✅ Image Processed");
+
+        console.log("🧠 Starting OCR...");
+
+        const { data } = await Tesseract.recognize(
+
+            processedImage,
+
+            "eng",
+
+            {
+
+                logger: m => {
+
+                    if (m.status) {
+
+                        console.log(`OCR: ${m.status}`);
+
+                    }
+
+                }
+
+            }
+
+        );
+
+        console.log("OCR Confidence:", data.confidence);
+
+        let captcha = data.text
+            .replace(/[^A-Za-z0-9]/g, "")
+            .trim();
+
+        console.log("OCR Raw:", data.text);
+        console.log("OCR Final:", captcha);
+
+        if (!captcha) {
+
+            throw new Error("OCR_FAILED");
+
         }
-    );
 
-    let captcha = data.text
-        .replace(/[^A-Za-z0-9]/g, "")
-        .trim();
+        return captcha;
 
-    console.log("OCR Result:", captcha);
+    } catch (err) {
 
-    return captcha;
+        console.error("========== OCR ERROR ==========");
+        console.error(err);
+        console.error(err.stack);
+        console.error("===============================");
+
+        throw err;
+
+    }
+
 }
 
 module.exports = solveCaptcha;
