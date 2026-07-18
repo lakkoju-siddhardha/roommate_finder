@@ -57,7 +57,7 @@ async function sendRoommateMail(to, roommate) {
 
             <p>
 
-                Login to SRMAPrommmateFinder and start chatting.
+                Login to SRMAPrommmateFinder and start chatting. through the <a href="https://roommate-finder-zgkj.onrender.com">SRMAPrommateFinder</a> platform.
 
             </p>
 
