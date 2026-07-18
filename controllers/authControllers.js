@@ -9,6 +9,8 @@ const {
     getRoommates
 } = require("../models/roommateModel");
 
+
+const loginQueue = require("../utils/loginQueue");
 // ---------------- LOGIN ----------------
 
 async function login(req, res) {
@@ -74,43 +76,48 @@ async function scrape(req, res) {
             return res.redirect("/");
         }
 
-        await loginToSRM(regNo, password);
+        console.log(`Queue Waiting: ${loginQueue.size}`);
+        console.log(`Currently Running: ${loginQueue.pending}`);
+
+        await loginQueue.add(() =>
+            loginToSRM(regNo, password)
+        );
 
         req.session.regNo = regNo;
 
         delete req.session.tempRegNo;
         delete req.session.tempPassword;
 
-        res.redirect("/dashboard");
+        return res.redirect("/dashboard");
 
     } catch (err) {
 
-    console.error(err);
+        console.error(err);
 
-    delete req.session.tempRegNo;
-    delete req.session.tempPassword;
+        delete req.session.tempRegNo;
+        delete req.session.tempPassword;
 
-    if (err.message === "INVALID_CREDENTIALS") {
+        if (err.message === "INVALID_CREDENTIALS") {
 
-     return res.render("login", {
-    error: "Incorrect Registration Number or Password."
-});;
+            return res.render("login", {
+                error: "Incorrect Registration Number or Password."
+            });
 
-    }
+        }
 
-    if (err.message === "CAPTCHA_FAILED") {
+        if (err.message === "CAPTCHA_FAILED") {
+
+            return res.render("login", {
+                error: "Couldn't verify the captcha. Please try again."
+            });
+
+        }
 
         return res.render("login", {
-    error: "Couldn't verify the captcha. Please try again."
-});
+            error: "Unable to connect to SRM. Please try again."
+        });
 
     }
-
-    return res.render("login", {
-        error: "Unable to connect to SRM. Please try again."
-    });
-
-}
 
 }
 
@@ -180,34 +187,39 @@ async function refreshProcess(req, res) {
         }
 
         console.log("Refreshing SRM Data...");
+        console.log(`Queue Waiting: ${loginQueue.size}`);
+        console.log(`Currently Running: ${loginQueue.pending}`);
 
-        await loginToSRM(regNo, password);
+        await loginQueue.add(() =>
+            loginToSRM(regNo, password)
+        );
 
         delete req.session.refreshPassword;
 
-        res.redirect("/dashboard");
+        return res.redirect("/dashboard");
 
     } catch (err) {
 
-    console.error(err);
+        console.error(err);
 
-    delete req.session.refreshPassword;
+        delete req.session.refreshPassword;
 
-    if (err.message === "INVALID_CREDENTIALS") {
+        if (err.message === "INVALID_CREDENTIALS") {
 
-        return res.send("Incorrect password.");
+            return res.send("Incorrect password.");
+
+        }
+
+        if (err.message === "CAPTCHA_FAILED") {
+
+            return res.send("Captcha verification failed. Please try again.");
+
+        }
+
+        return res.send("Unable to refresh data.");
 
     }
 
-    if (err.message === "CAPTCHA_FAILED") {
-
-        return res.send("Captcha verification failed. Please try again.");
-
-    }
-
-    res.send("Unable to refresh data.");
-
-}
 }
 module.exports = {
     login,

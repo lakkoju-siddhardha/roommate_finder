@@ -4,10 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-  "start": "node server.js",
-  "dev": "nodemon server.js",
-  "postinstall": "PLAYWRIGHT_BROWSERS_PATH=0 npx playwright install chromium"
-},
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "postinstall": "PLAYWRIGHT_BROWSERS_PATH=0 npx playwright install chromium"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -19,6 +19,7 @@
     "express-session": "^1.19.0",
     "mysql2": "^3.22.6",
     "nodemailer": "^9.0.3",
+    "p-queue": "^9.3.1",
     "playwright": "^1.61.1",
     "sharp": "^0.35.3",
     "socket.io": "^4.8.3",
